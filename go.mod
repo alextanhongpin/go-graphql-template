@@ -8,6 +8,7 @@ require (
 	github.com/99designs/gqlgen v0.13.0
 	github.com/DATA-DOG/go-txdb v0.1.3
 	github.com/Microsoft/go-winio v0.4.14 // indirect
+	github.com/alextanhongpin/go-gen-cli v1.0.0 // indirect
 	github.com/alextanhongpin/pkg v0.4.12
 	github.com/cenkalti/backoff/v3 v3.2.2 // indirect
 	github.com/containerd/continuity v0.0.0-20200928162600-f2cc35102c2a // indirect
