@@ -1,0 +1,35 @@
+package {{ .Entity }}graph
+
+import "github.com/graph-gophers/graphql-go"
+
+// {{ pascalcase .Entity }}Args represents the args for getting {{ .Entity }}.
+type {{ pascalcase .Entity }}Args struct {
+	ID graphql.ID
+}
+
+type Create{{ pascalcase .Entity }}Input struct {
+	Email    string
+	Name     string
+	Password string
+}
+
+type Create{{ pascalcase .Entity }}Args struct {
+	Input Create{{ pascalcase .Entity }}Input
+}
+
+type Update{{ pascalcase .Entity }}Input struct {
+	ID   graphql.ID
+	Name string
+}
+
+type Update{{ pascalcase .Entity }}Args struct {
+	Input Update{{ pascalcase .Entity }}Input
+}
+
+type Delete{{ pascalcase .Entity }}Input struct {
+	ID graphql.ID
+}
+
+type Delete{{ pascalcase .Entity }}Args struct {
+	Input Delete{{ pascalcase .Entity }}Input
+}

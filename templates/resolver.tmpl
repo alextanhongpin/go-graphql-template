@@ -1,0 +1,41 @@
+package resolver
+
+import (
+	"context"
+	"strings"
+
+	"github.com/alextanhongpin/graphql-server-starter/entity"
+	"github.com/alextanhongpin/graphql-server-starter/model"
+
+	"github.com/graph-gophers/graphql-go"
+)
+
+// {{ pascalcase .Entity }}Resolver holds the {{ .Entity }} entity to resolve.
+type {{ pascalcase .Entity }}Resolver struct {
+	{{ pascalcase .Entity }} entity.{{ pascalcase .Entity }}
+	Ctx     *model.ResolverContext
+}
+
+// New{{ pascalcase .Entity }}Resolver returns a new {{ pascalcase .Entity }} resolver.
+func New{{ pascalcase .Entity }}Resolver(ctx *model.ResolverContext, {{ .Entity }} entity.{{ pascalcase .Entity }}) *{{ pascalcase .Entity }}Resolver {
+	return &{{ pascalcase .Entity }}Resolver{
+		{{ pascalcase .Entity }}: {{ .Entity }},
+		Ctx:     ctx,
+	}
+}
+
+// ID returns the {{ .Entity }}'s id.
+func (r *{{ pascalcase .Entity }}Resolver) ID() graphql.ID {
+	return graphql.ID(r.{{ pascalcase .Entity }}.ID.String())
+}
+
+// Provider returns the {{ .Entity }}'s provider.
+func (r *{{ pascalcase .Entity }}Resolver) Provider() string {
+	provider := string(r.{{ pascalcase .Entity }}.Provider)
+	return strings.ToUpper(provider)
+}
+
+// Email returns the {{ .Entity }}'s unique email.
+func (r *{{ pascalcase .Entity }}Resolver) Email() string {
+	return r.{{ pascalcase .Entity }}.Email
+}
