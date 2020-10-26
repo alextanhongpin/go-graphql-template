@@ -1,0 +1,26 @@
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  #emailVerified: Boolean!
+  #phoneNumber: String!
+  #phoneNumberVerified: Boolean!
+  #familyName: String!
+  #givenName: String!
+  #preferredUsername: String!
+  #profile: String!
+  #picture: String!
+  #createdAt: String!
+  #updatedAt: String!
+}
+
+type UserConnection {
+  totalCount: Int!
+  edges: [UserEdge!]!
+  #pageInfo: PageInfo!
+}
+
+type UserEdge {
+  cursor: String!
+  node: User!
+}

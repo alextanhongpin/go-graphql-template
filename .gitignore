@@ -1,0 +1,19 @@
+# Ignore generated packrd files.
+packrd/
+
+# Ignore generated entities.
+entity/
+
+# Ignore all .env file except .env.sample
+.env*
+!.env.sample
+
+# Exclude coverage files.
+cover.*
+
+tags
+
+.DS_store
+
+# Ignore local temp folder.
+tmp/

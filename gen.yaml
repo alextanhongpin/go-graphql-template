@@ -1,0 +1,10 @@
+---
+templates:
+- name: query
+  description: Creates a new query with connection
+  actions:
+  - description: creates a resolver query
+    template: templates/query.tmpl
+    path: resolver/{{lower .Env.ENTITY}}.query.go
+  environment:
+    Entity: $ENTITY
