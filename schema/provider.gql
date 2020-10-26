@@ -1,0 +1,5 @@
+enum Provider {
+  EMAIL
+  FACEBOOK
+  GOOGLE
+}

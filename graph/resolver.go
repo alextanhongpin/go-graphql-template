@@ -1,19 +1,25 @@
-package resolver
+package graph
 
 import (
 	"database/sql"
 
 	"github.com/alextanhongpin/graphql-server-starter/entity"
+	"github.com/alextanhongpin/graphql-server-starter/graph/accountgraph"
+	"github.com/alextanhongpin/graphql-server-starter/graph/usergraph"
 	"github.com/alextanhongpin/graphql-server-starter/model"
-	"github.com/alextanhongpin/graphql-server-starter/resolver/usergraph"
 )
 
-type UserQuery = usergraph.Query
-
-type UserMutation = usergraph.Mutation
+type (
+	UserQuery       = usergraph.Query
+	UserMutation    = usergraph.Mutation
+	AccountQuery    = accountgraph.Query
+	AccountMutation = accountgraph.Mutation
+)
 
 // Resolver represents the root for all queries and mutations.
 type Resolver struct {
+	*AccountQuery
+	*AccountMutation
 	*UserQuery
 	*UserMutation
 }
@@ -31,7 +37,9 @@ func New(opts Options) *Resolver {
 	}
 
 	return &Resolver{
-		UserQuery:    usergraph.NewQuery(ctx),
-		UserMutation: usergraph.NewMutation(ctx),
+		AccountQuery:    accountgraph.NewQuery(ctx),
+		AccountMutation: accountgraph.NewMutation(ctx),
+		UserQuery:       usergraph.NewQuery(ctx),
+		UserMutation:    usergraph.NewMutation(ctx),
 	}
 }

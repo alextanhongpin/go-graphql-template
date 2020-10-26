@@ -1,0 +1,17 @@
+type Account {
+  id: ID!
+  provider: Provider!
+  user: User!
+  email: String!
+}
+
+type AccountConnection {
+  totalCount: Int!
+  edges: [AccountEdge!]!
+  pageInfo: PageInfo!
+}
+
+type AccountEdge {
+  cursor: String!
+  node: Account!
+}

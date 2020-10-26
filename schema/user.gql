@@ -2,6 +2,7 @@ type User {
   id: ID!
   name: String!
   email: String!
+  accounts: [Account!]!
   #emailVerified: Boolean!
   #phoneNumber: String!
   #phoneNumberVerified: Boolean!
@@ -17,7 +18,7 @@ type User {
 type UserConnection {
   totalCount: Int!
   edges: [UserEdge!]!
-  #pageInfo: PageInfo!
+  pageInfo: PageInfo!
 }
 
 type UserEdge {

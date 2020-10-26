@@ -1,10 +1,24 @@
----
+version: "0.1"
 templates:
-- name: query
-  description: Creates a new query with connection
+- name: domain
   actions:
-  - description: creates a resolver query
-    template: templates/query.tmpl
-    path: resolver/{{lower .Env.ENTITY}}.query.go
-  environment:
-    Entity: $ENTITY
+  - name: Create Resolver
+    path: templates/resolver.tmpl:/resolver/{{ .Entity }}.go
+    variables:
+      Entity: '{{ snakecase .Pkg }}'
+  - name: Create Mutation
+    path: templates/mutation.tmpl:/graph/{{ .Entity }}graph/mutation.go
+    variables:
+      Entity: '{{ snakecase .Pkg }}'
+  - name: Create Query
+    path: templates/query.tmpl:/graph/{{ .Entity }}graph/query.go
+    variables:
+      Entity: '{{ snakecase .Pkg }}'
+  - name: Create Input
+    path: templates/input.tmpl:/graph/{{ .Entity }}graph/input.go
+    variables:
+      Entity: '{{ snakecase .Pkg }}'
+  - name: Create SQL
+    path: templates/sql.tmpl:/sql/{{ .Entity }}.sql
+    variables:
+      Entity: '{{ snakecase .Pkg }}'

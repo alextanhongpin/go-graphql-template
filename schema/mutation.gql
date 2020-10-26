@@ -1,9 +1,40 @@
 type Mutation {
   # User.
   createUser(input: CreateUserInput!): User!
+  updateUser(input: UpdateUserInput!): User!
+  deleteUser(input: DeleteUserInput!): User!
+
+  # Account.
+  createAccount(input: CreateAccountInput!): Account!
+  updateAccount(input: UpdateAccountInput!): Account!
+  deleteAccount(input: DeleteAccountInput!): Account!
 }
 
 input CreateUserInput {
+  name: String!
+  email: String!
+}
+
+input UpdateUserInput {
+  id: ID!
+  name: String!
+}
+
+input DeleteUserInput {
+  id: ID!
+}
+
+input CreateAccountInput {
+  userID: ID!
   email: String!
   password: String!
+}
+
+input UpdateAccountInput {
+  id: ID!
+  email: String!
+}
+
+input DeleteAccountInput {
+  id: ID!
 }

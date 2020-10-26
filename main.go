@@ -11,8 +11,8 @@ import (
 	"github.com/graph-gophers/graphql-go/relay"
 
 	"github.com/alextanhongpin/graphql-server-starter/app"
+	"github.com/alextanhongpin/graphql-server-starter/graph"
 	"github.com/alextanhongpin/graphql-server-starter/pkg/middleware"
-	"github.com/alextanhongpin/graphql-server-starter/resolver"
 	"github.com/alextanhongpin/pkg/grace"
 )
 
@@ -30,7 +30,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	r := resolver.New(resolver.Options{
+	r := graph.New(graph.Options{
 		DB: db,
 	})
 	schema := graphql.MustParseSchema(schemas, r, opts...)
