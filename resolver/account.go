@@ -43,7 +43,7 @@ func (r *AccountResolver) Email() string {
 // User returns the account's user.
 func (r *AccountResolver) User(ctx context.Context) (*UserResolver, error) {
 	userID := r.Account.UserID
-	user, err := r.Ctx.Repository.FindUser(ctx, userID)
+	user, err := r.Ctx.UserLoader.Load(ctx, userID.String())
 	if err != nil {
 		return nil, err
 	}
