@@ -8,9 +8,8 @@ type UserArgs struct {
 }
 
 type CreateUserInput struct {
-	Email    string
-	Name     string
-	Password string
+	Email string `validate:"email,required"`
+	Name  string `validate:"required"`
 }
 
 type CreateUserArgs struct {
@@ -18,8 +17,8 @@ type CreateUserArgs struct {
 }
 
 type UpdateUserInput struct {
-	ID   graphql.ID
-	Name string
+	ID   graphql.ID `validate:"required"`
+	Name string     `validate:"required"`
 }
 
 type UpdateUserArgs struct {
@@ -27,7 +26,7 @@ type UpdateUserArgs struct {
 }
 
 type DeleteUserInput struct {
-	ID graphql.ID
+	ID graphql.ID `validate:"required"`
 }
 
 type DeleteUserArgs struct {
