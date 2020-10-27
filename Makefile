@@ -14,7 +14,7 @@ include pkg/database/Makefile
 worker:
 	workwebui -redis="redis://${REDIS_HOST}:${REDIS_PORT}" -ns="question_worker" -listen=":5040"
 
-test:
+test: # Runs unit testing without any infrastructure dependencies such as database.
 	@#Do this to pipe to both file and stdout.
 	@#go test -coverprofile cover.out -v ./... | tee unit.out
 	go test -coverprofile cover.out -v ./...
@@ -23,7 +23,7 @@ test:
 # Alias for unit-testing.
 ut: test
 
-integration-test:
+integration-test: # Run integration tests with the +build integration flag.
 	go test -v -failfast -coverprofile cover.out -tags=integration ./...
 	go tool cover -html=cover.out
 
@@ -31,8 +31,8 @@ integration-test:
 it: integration-test
 
 
-up:
+up: # Starts docker-compose.
 	@docker-compose up -d
 
-down:
+down: # Stops docker-compose.
 	@docker-compose down
