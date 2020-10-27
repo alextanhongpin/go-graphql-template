@@ -6,7 +6,7 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/alextanhongpin/graphql-server/model"
+	"github.com/alextanhongpin/graphql-server-starter/model"
 )
 
 func TestNewCursor(t *testing.T) {
