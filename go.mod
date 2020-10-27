@@ -11,6 +11,8 @@ require (
 	github.com/cenkalti/backoff/v3 v3.2.2 // indirect
 	github.com/containerd/continuity v0.0.0-20200928162600-f2cc35102c2a // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/go-playground/universal-translator v0.17.0 // indirect
+	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/gobuffalo/here v0.6.2 // indirect
 	github.com/gobuffalo/packr/v2 v2.8.0
 	github.com/gomodule/redigo v1.8.2
@@ -21,6 +23,7 @@ require (
 	github.com/graph-gophers/graphql-go v0.0.0-20200819123640-3b5ddcd884ae
 	github.com/karrick/godirwalk v1.16.1 // indirect
 	github.com/kelseyhightower/envconfig v1.4.0
+	github.com/leodido/go-urn v1.2.0 // indirect
 	github.com/lib/pq v1.8.0
 	github.com/markbates/pkger v0.17.1
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
@@ -28,6 +31,7 @@ require (
 	github.com/ory/dockertest/v3 v3.6.0
 	github.com/rubenv/sql-migrate v0.0.0-20200616145509-8d140a17f351
 	github.com/sirupsen/logrus v1.7.0 // indirect
+	github.com/smartystreets/goconvey v1.6.4
 	github.com/stretchr/objx v0.3.0 // indirect
 	github.com/stretchr/testify v1.6.1
 	go.opentelemetry.io/otel v0.12.0
@@ -39,6 +43,7 @@ require (
 	golang.org/x/net v0.0.0-20200930145003-4acb6c075d10 // indirect
 	golang.org/x/sync v0.0.0-20200930132711-30421366ff76 // indirect
 	golang.org/x/sys v0.0.0-20200930185726-fdedc70b468f // indirect
+	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 	gopkg.in/yaml.v2 v2.3.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20200615113413-eeeca48fe776 // indirect
 )
