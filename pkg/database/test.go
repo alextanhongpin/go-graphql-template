@@ -26,7 +26,7 @@ func SetupTestDB() (*sql.DB, func()) {
 	}
 
 	// pulls an image, creates a container based on it and runs it
-	resource, err := pool.Run("postgres", "12.2-alpine", []string{
+	resource, err := pool.Run("postgres", "13.0-alpine", []string{
 		"POSTGRES_DB=test",
 		"POSTGRES_PASSWORD=secret",
 		"POSTGRES_USER=root",
