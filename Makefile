@@ -36,3 +36,7 @@ up: # Starts docker-compose.
 
 down: # Stops docker-compose.
 	@docker-compose down
+
+
+service-%:
+	gen generate -t domain $*
