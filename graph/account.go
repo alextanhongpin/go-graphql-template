@@ -41,14 +41,14 @@ func (r *AccountResolver) Email() string {
 }
 
 // User returns the account's user.
-func (r *AccountResolver) User(ctx context.Context) (*UserResolver, error) {
+func (r *AccountResolver) User(ctx context.Context) (*PartialUserResolver, error) {
 	userID := r.account.UserID
 	loader := middleware.ContextDataLoader(ctx)
 	user, err := loader.User.Load(ctx, userID.String())
 	if err != nil {
 		return nil, err
 	}
-	return &UserResolver{
+	return &PartialUserResolver{
 		user: user,
 		ctx:  r.ctx,
 	}, nil
