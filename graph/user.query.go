@@ -1,15 +1,19 @@
-package usergraph
+package graph
 
 import (
 	"context"
 
 	"github.com/alextanhongpin/go-graphql-template/model"
-	"github.com/alextanhongpin/go-graphql-template/resolver"
 	"github.com/google/uuid"
 )
 
-type Query struct {
-	ctx *model.ResolverContext
+type UserQuery struct {
+	ctx *Context
+}
+
+// NewUserQuery returns a new query.
+func NewUserQuery(ctx *Context) *UserQuery {
+	return &UserQuery{ctx}
 }
 
 type UserConnection struct {
@@ -20,15 +24,10 @@ type UserConnection struct {
 
 type UserEdge struct {
 	Cursor string
-	Node   *resolver.UserResolver
+	Node   *UserResolver
 }
 
-// NewQuery reutrns a new query.
-func NewQuery(ctx *model.ResolverContext) *Query {
-	return &Query{ctx}
-}
-
-func (q *Query) User(ctx context.Context, args UserArgs) (*resolver.UserResolver, error) {
+func (q *UserQuery) User(ctx context.Context, args UserArgs) (*UserResolver, error) {
 	userID, err := uuid.Parse(string(args.ID))
 	if err != nil {
 		return nil, err
@@ -38,8 +37,8 @@ func (q *Query) User(ctx context.Context, args UserArgs) (*resolver.UserResolver
 	if err != nil {
 		return nil, err
 	}
-	return &resolver.UserResolver{
-		User: user,
-		Ctx:  q.ctx,
+	return &UserResolver{
+		user: user,
+		ctx:  q.ctx,
 	}, nil
 }

@@ -1,55 +1,54 @@
-package resolver
+package graph
 
 import (
 	"context"
 
 	"github.com/alextanhongpin/go-graphql-template/entity"
-	"github.com/alextanhongpin/go-graphql-template/model"
 
 	"github.com/graph-gophers/graphql-go"
 )
 
 // UserResolver holds the user entity to resolve.
 type UserResolver struct {
-	User entity.User
-	Ctx  *model.ResolverContext
+	user entity.User
+	ctx  *Context
 }
 
 // NewUserResolver returns a new User resolver.
-func NewUserResolver(ctx *model.ResolverContext, user entity.User) *UserResolver {
+func NewUserResolver(ctx *Context, user entity.User) *UserResolver {
 	return &UserResolver{
-		User: user,
-		Ctx:  ctx,
+		user: user,
+		ctx:  ctx,
 	}
 }
 
 // ID returns the user's id.
 func (r *UserResolver) ID() graphql.ID {
-	return graphql.ID(r.User.ID.String())
+	return graphql.ID(r.user.ID.String())
 }
 
 // Name returns the user's name.
 func (r *UserResolver) Name() string {
-	return r.User.Name
+	return r.user.Name
 }
 
 // Email returns the user's unique email address.
 func (r *UserResolver) Email() string {
-	return r.User.Email.String
+	return r.user.Email.String
 }
 
 func (r *UserResolver) Accounts(ctx context.Context) ([]*AccountResolver, error) {
-	userID := r.User.ID
+	userID := r.user.ID
 
-	accounts, err := r.Ctx.Repository.FindAccountsWithUserID(ctx, userID)
+	accounts, err := r.ctx.Repository.FindAccountsWithUserID(ctx, userID)
 	if err != nil {
 		return nil, err
 	}
 	result := make([]*AccountResolver, len(accounts))
 	for idx, account := range accounts {
 		result[idx] = &AccountResolver{
-			Account: account,
-			Ctx:     r.Ctx,
+			account: account,
+			ctx:     r.ctx,
 		}
 	}
 	return result, nil

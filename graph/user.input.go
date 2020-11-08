@@ -1,4 +1,4 @@
-package usergraph
+package graph
 
 import "github.com/graph-gophers/graphql-go"
 

@@ -1,4 +1,4 @@
-package accountgraph
+package graph
 
 import "github.com/graph-gophers/graphql-go"
 

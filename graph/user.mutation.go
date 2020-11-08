@@ -1,24 +1,23 @@
-package usergraph
+package graph
 
 import (
 	"context"
 
 	"github.com/alextanhongpin/go-graphql-template/entity"
 	"github.com/alextanhongpin/go-graphql-template/model"
-	"github.com/alextanhongpin/go-graphql-template/resolver"
 
 	"github.com/google/uuid"
 )
 
-type Mutation struct {
-	ctx *model.ResolverContext
+type UserMutation struct {
+	ctx *Context
 }
 
-func NewMutation(ctx *model.ResolverContext) *Mutation {
-	return &Mutation{ctx: ctx}
+func NewUserMutation(ctx *Context) *UserMutation {
+	return &UserMutation{ctx: ctx}
 }
 
-func (m *Mutation) CreateUser(ctx context.Context, args CreateUserArgs) (*resolver.UserResolver, error) {
+func (m *UserMutation) CreateUser(ctx context.Context, args CreateUserArgs) (*UserResolver, error) {
 	if err := m.ctx.Validator.Struct(args.Input); err != nil {
 		return nil, err
 	}
@@ -35,13 +34,13 @@ func (m *Mutation) CreateUser(ctx context.Context, args CreateUserArgs) (*resolv
 	if err != nil {
 		return nil, err
 	}
-	return &resolver.UserResolver{
-		User: user,
-		Ctx:  m.ctx,
+	return &UserResolver{
+		user: user,
+		ctx:  m.ctx,
 	}, nil
 }
 
-func (m *Mutation) UpdateUser(ctx context.Context, args UpdateUserArgs) (*resolver.UserResolver, error) {
+func (m *UserMutation) UpdateUser(ctx context.Context, args UpdateUserArgs) (*UserResolver, error) {
 	if err := m.ctx.Validator.Struct(args.Input); err != nil {
 		return nil, err
 	}
@@ -62,13 +61,13 @@ func (m *Mutation) UpdateUser(ctx context.Context, args UpdateUserArgs) (*resolv
 	if err != nil {
 		return nil, err
 	}
-	return &resolver.UserResolver{
-		User: user,
-		Ctx:  m.ctx,
+	return &UserResolver{
+		user: user,
+		ctx:  m.ctx,
 	}, nil
 }
 
-func (m *Mutation) DeleteUser(ctx context.Context, args DeleteUserArgs) (*resolver.UserResolver, error) {
+func (m *UserMutation) DeleteUser(ctx context.Context, args DeleteUserArgs) (*UserResolver, error) {
 	if err := m.ctx.Validator.Struct(args.Input); err != nil {
 		return nil, err
 	}
@@ -82,8 +81,8 @@ func (m *Mutation) DeleteUser(ctx context.Context, args DeleteUserArgs) (*resolv
 	if err != nil {
 		return nil, err
 	}
-	return &resolver.UserResolver{
-		User: user,
-		Ctx:  m.ctx,
+	return &UserResolver{
+		user: user,
+		ctx:  m.ctx,
 	}, nil
 }

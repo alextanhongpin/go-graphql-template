@@ -1,15 +1,14 @@
-package accountgraph
+package graph
 
 import (
 	"context"
 
 	"github.com/alextanhongpin/go-graphql-template/model"
-	"github.com/alextanhongpin/go-graphql-template/resolver"
 	"github.com/google/uuid"
 )
 
-type Query struct {
-	ctx *model.ResolverContext
+type AccountQuery struct {
+	ctx *Context
 }
 
 type AccountConnection struct {
@@ -20,15 +19,15 @@ type AccountConnection struct {
 
 type AccountEdge struct {
 	Cursor string
-	Node   *resolver.AccountResolver
+	Node   *AccountResolver
 }
 
-// NewQuery reutrns a new query.
-func NewQuery(ctx *model.ResolverContext) *Query {
-	return &Query{ctx}
+// NewAccountQuery reutrns a new query.
+func NewAccountQuery(ctx *Context) *AccountQuery {
+	return &AccountQuery{ctx}
 }
 
-func (q *Query) Account(ctx context.Context, args AccountArgs) (*resolver.AccountResolver, error) {
+func (q *AccountQuery) Account(ctx context.Context, args AccountArgs) (*AccountResolver, error) {
 	accountID, err := uuid.Parse(string(args.ID))
 	if err != nil {
 		return nil, err
@@ -38,8 +37,8 @@ func (q *Query) Account(ctx context.Context, args AccountArgs) (*resolver.Accoun
 	if err != nil {
 		return nil, err
 	}
-	return &resolver.AccountResolver{
-		Account: account,
-		Ctx:     q.ctx,
+	return &AccountResolver{
+		account: account,
+		ctx:     q.ctx,
 	}, nil
 }

@@ -11,6 +11,7 @@ import (
 	"github.com/graph-gophers/graphql-go/relay"
 
 	"github.com/alextanhongpin/go-graphql-template/app"
+	"github.com/alextanhongpin/go-graphql-template/entity"
 	"github.com/alextanhongpin/go-graphql-template/graph"
 	"github.com/alextanhongpin/go-graphql-template/pkg/middleware"
 	"github.com/alextanhongpin/pkg/grace"
@@ -30,7 +31,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	r := graph.New(graph.Options{
+	r := graph.NewResolver(graph.Options{
 		DB: db,
 	})
 	schema := graphql.MustParseSchema(schemas, r, opts...)
@@ -40,9 +41,12 @@ func main() {
 	mux.Handle("/query",
 		middleware.ClientIP(
 			middleware.Cors(
-				middleware.Authz(
-					&relay.Handler{Schema: schema},
-					signer,
+				middleware.DataLoader(
+					middleware.Authz(
+						&relay.Handler{Schema: schema},
+						signer,
+					),
+					entity.New(db),
 				),
 			),
 		),

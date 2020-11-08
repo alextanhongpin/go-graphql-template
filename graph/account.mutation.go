@@ -1,23 +1,22 @@
-package accountgraph
+package graph
 
 import (
 	"context"
 
-	"github.com/alextanhongpin/go-graphql-template/entity"
-	"github.com/alextanhongpin/go-graphql-template/model"
-	"github.com/alextanhongpin/go-graphql-template/resolver"
 	"github.com/google/uuid"
+
+	"github.com/alextanhongpin/go-graphql-template/entity"
 )
 
-type Mutation struct {
-	ctx *model.ResolverContext
+type AccountMutation struct {
+	ctx *Context
 }
 
-func NewMutation(ctx *model.ResolverContext) *Mutation {
-	return &Mutation{ctx: ctx}
+func NewAccountMutation(ctx *Context) *AccountMutation {
+	return &AccountMutation{ctx: ctx}
 }
 
-func (m *Mutation) CreateAccount(ctx context.Context, args CreateAccountArgs) (*resolver.AccountResolver, error) {
+func (m *AccountMutation) CreateAccount(ctx context.Context, args CreateAccountArgs) (*AccountResolver, error) {
 	var (
 		email    = args.Input.Email
 		password = args.Input.Password
@@ -38,13 +37,13 @@ func (m *Mutation) CreateAccount(ctx context.Context, args CreateAccountArgs) (*
 	if err != nil {
 		return nil, err
 	}
-	return &resolver.AccountResolver{
-		Account: account,
-		Ctx:     m.ctx,
+	return &AccountResolver{
+		account: account,
+		ctx:     m.ctx,
 	}, nil
 }
 
-func (m *Mutation) UpdateAccount(ctx context.Context, args UpdateAccountArgs) (*resolver.AccountResolver, error) {
+func (m *AccountMutation) UpdateAccount(ctx context.Context, args UpdateAccountArgs) (*AccountResolver, error) {
 	var (
 		email = args.Input.Email
 		id    = args.Input.ID
@@ -60,13 +59,13 @@ func (m *Mutation) UpdateAccount(ctx context.Context, args UpdateAccountArgs) (*
 	if err != nil {
 		return nil, err
 	}
-	return &resolver.AccountResolver{
-		Account: account,
-		Ctx:     m.ctx,
+	return &AccountResolver{
+		account: account,
+		ctx:     m.ctx,
 	}, nil
 }
 
-func (m *Mutation) DeleteAccount(ctx context.Context, args DeleteAccountArgs) (*resolver.AccountResolver, error) {
+func (m *AccountMutation) DeleteAccount(ctx context.Context, args DeleteAccountArgs) (*AccountResolver, error) {
 	accountID, err := uuid.Parse(string(args.Input.ID))
 	if err != nil {
 		return nil, err
@@ -75,8 +74,8 @@ func (m *Mutation) DeleteAccount(ctx context.Context, args DeleteAccountArgs) (*
 	if err != nil {
 		return nil, err
 	}
-	return &resolver.AccountResolver{
-		Account: account,
-		Ctx:     m.ctx,
+	return &AccountResolver{
+		account: account,
+		ctx:     m.ctx,
 	}, nil
 }

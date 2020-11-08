@@ -1,6 +1,6 @@
 // +build integration
 
-package usergraph_test
+package graph_test
 
 import (
 	"os"

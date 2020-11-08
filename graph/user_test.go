@@ -1,4 +1,4 @@
-package resolver_test
+package graph_test
 
 import (
 	"context"
@@ -11,8 +11,8 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/alextanhongpin/go-graphql-template/entity"
+	"github.com/alextanhongpin/go-graphql-template/graph"
 	"github.com/alextanhongpin/go-graphql-template/model"
-	"github.com/alextanhongpin/go-graphql-template/resolver"
 )
 
 type userRepo struct {
@@ -54,7 +54,7 @@ func TestUserResolver(t *testing.T) {
 		Email: model.NewNullString("john.doe@mail.com"),
 	}
 
-	userResolver := resolver.NewUserResolver(model.NewResolverContext(repo), user)
+	userResolver := graph.NewUserResolver(graph.NewContext(repo), user)
 	assert.Equal(user.ID.String(), string(userResolver.ID()))
 	assert.Equal(user.Name, userResolver.Name())
 	assert.Equal(user.Email.String, userResolver.Email())

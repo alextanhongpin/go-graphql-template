@@ -4,16 +4,6 @@ import (
 	"database/sql"
 
 	"github.com/alextanhongpin/go-graphql-template/entity"
-	"github.com/alextanhongpin/go-graphql-template/graph/accountgraph"
-	"github.com/alextanhongpin/go-graphql-template/graph/usergraph"
-	"github.com/alextanhongpin/go-graphql-template/model"
-)
-
-type (
-	UserQuery       = usergraph.Query
-	UserMutation    = usergraph.Mutation
-	AccountQuery    = accountgraph.Query
-	AccountMutation = accountgraph.Mutation
 )
 
 // Resolver represents the root for all queries and mutations.
@@ -30,16 +20,15 @@ type Options struct {
 }
 
 // New returns a Resolver configured with the Options.
-func New(opts Options) *Resolver {
-	r := entity.New(opts.DB)
-	ctx := &model.ResolverContext{
-		Repository: r,
+func NewResolver(opts Options) *Resolver {
+	ctx := &Context{
+		Repository: entity.New(opts.DB),
 	}
 
 	return &Resolver{
-		AccountQuery:    accountgraph.NewQuery(ctx),
-		AccountMutation: accountgraph.NewMutation(ctx),
-		UserQuery:       usergraph.NewQuery(ctx),
-		UserMutation:    usergraph.NewMutation(ctx),
+		AccountQuery:    NewAccountQuery(ctx),
+		AccountMutation: NewAccountMutation(ctx),
+		UserQuery:       NewUserQuery(ctx),
+		UserMutation:    NewUserMutation(ctx),
 	}
 }
