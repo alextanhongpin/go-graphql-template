@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"log"
 
-	"github.com/alextanhongpin/graphql-server-starter/pkg/database"
+	"github.com/alextanhongpin/go-graphql-template/pkg/database"
 	"github.com/alextanhongpin/pkg/grace"
 )
 

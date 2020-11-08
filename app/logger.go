@@ -8,7 +8,7 @@ import (
 	"github.com/kelseyhightower/envconfig"
 	"go.uber.org/zap"
 
-	"github.com/alextanhongpin/graphql-server-starter/pkg/logger"
+	"github.com/alextanhongpin/go-graphql-template/pkg/logger"
 	"github.com/alextanhongpin/pkg/grace"
 )
 

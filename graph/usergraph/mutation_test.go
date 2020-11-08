@@ -10,11 +10,11 @@ import (
 
 	. "github.com/smartystreets/goconvey/convey"
 
-	"github.com/alextanhongpin/graphql-server-starter/entity"
-	"github.com/alextanhongpin/graphql-server-starter/graph/usergraph"
-	"github.com/alextanhongpin/graphql-server-starter/model"
-	"github.com/alextanhongpin/graphql-server-starter/pkg/database"
-	"github.com/alextanhongpin/graphql-server-starter/resolver"
+	"github.com/alextanhongpin/go-graphql-template/entity"
+	"github.com/alextanhongpin/go-graphql-template/graph/usergraph"
+	"github.com/alextanhongpin/go-graphql-template/model"
+	"github.com/alextanhongpin/go-graphql-template/pkg/database"
+	"github.com/alextanhongpin/go-graphql-template/resolver"
 )
 
 func TestCreateUser(t *testing.T) {

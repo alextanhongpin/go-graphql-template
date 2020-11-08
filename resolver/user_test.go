@@ -10,9 +10,9 @@ import (
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/alextanhongpin/graphql-server-starter/entity"
-	"github.com/alextanhongpin/graphql-server-starter/model"
-	"github.com/alextanhongpin/graphql-server-starter/resolver"
+	"github.com/alextanhongpin/go-graphql-template/entity"
+	"github.com/alextanhongpin/go-graphql-template/model"
+	"github.com/alextanhongpin/go-graphql-template/resolver"
 )
 
 type userRepo struct {

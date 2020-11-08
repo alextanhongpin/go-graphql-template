@@ -3,7 +3,7 @@ package model_test
 import (
 	"testing"
 
-	"github.com/alextanhongpin/graphql-server-starter/model"
+	"github.com/alextanhongpin/go-graphql-template/model"
 )
 
 func TestNullStringFactory(t *testing.T) {

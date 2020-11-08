@@ -6,7 +6,7 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/alextanhongpin/graphql-server-starter/model"
+	"github.com/alextanhongpin/go-graphql-template/model"
 )
 
 func TestNewCursor(t *testing.T) {

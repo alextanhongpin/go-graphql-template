@@ -1,8 +1,8 @@
 package model
 
 import (
-	"github.com/alextanhongpin/graphql-server-starter/entity"
-	"github.com/alextanhongpin/graphql-server-starter/pkg/loader"
+	"github.com/alextanhongpin/go-graphql-template/entity"
+	"github.com/alextanhongpin/go-graphql-template/pkg/loader"
 	"github.com/go-playground/validator"
 )
 

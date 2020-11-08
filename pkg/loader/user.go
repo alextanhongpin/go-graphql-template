@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/alextanhongpin/graphql-server-starter/entity"
+	"github.com/alextanhongpin/go-graphql-template/entity"
 	"github.com/google/uuid"
 	"github.com/graph-gophers/dataloader"
 )

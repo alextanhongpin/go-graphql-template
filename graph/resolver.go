@@ -3,10 +3,10 @@ package graph
 import (
 	"database/sql"
 
-	"github.com/alextanhongpin/graphql-server-starter/entity"
-	"github.com/alextanhongpin/graphql-server-starter/graph/accountgraph"
-	"github.com/alextanhongpin/graphql-server-starter/graph/usergraph"
-	"github.com/alextanhongpin/graphql-server-starter/model"
+	"github.com/alextanhongpin/go-graphql-template/entity"
+	"github.com/alextanhongpin/go-graphql-template/graph/accountgraph"
+	"github.com/alextanhongpin/go-graphql-template/graph/usergraph"
+	"github.com/alextanhongpin/go-graphql-template/model"
 )
 
 type (

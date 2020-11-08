@@ -4,7 +4,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/alextanhongpin/graphql-server-starter/model"
+	"github.com/alextanhongpin/go-graphql-template/model"
 )
 
 func TestMultiError_InitEmpty(t *testing.T) {

@@ -1,4 +1,4 @@
-module github.com/alextanhongpin/graphql-server-starter
+module github.com/alextanhongpin/go-graphql-template
 
 go 1.14
 

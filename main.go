@@ -10,9 +10,9 @@ import (
 	"github.com/graph-gophers/graphql-go"
 	"github.com/graph-gophers/graphql-go/relay"
 
-	"github.com/alextanhongpin/graphql-server-starter/app"
-	"github.com/alextanhongpin/graphql-server-starter/graph"
-	"github.com/alextanhongpin/graphql-server-starter/pkg/middleware"
+	"github.com/alextanhongpin/go-graphql-template/app"
+	"github.com/alextanhongpin/go-graphql-template/graph"
+	"github.com/alextanhongpin/go-graphql-template/pkg/middleware"
 	"github.com/alextanhongpin/pkg/grace"
 )
 

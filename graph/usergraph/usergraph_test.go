@@ -8,8 +8,8 @@ import (
 
 	"github.com/gomodule/redigo/redis"
 
-	"github.com/alextanhongpin/graphql-server-starter/app"
-	"github.com/alextanhongpin/graphql-server-starter/pkg/database"
+	"github.com/alextanhongpin/go-graphql-template/app"
+	"github.com/alextanhongpin/go-graphql-template/pkg/database"
 )
 
 var pool *redis.Pool

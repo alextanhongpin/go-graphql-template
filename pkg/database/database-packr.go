@@ -5,4 +5,4 @@
 // and any other packr generated files.
 package database
 
-import _ "github.com/alextanhongpin/graphql-server-starter/packrd"
+import _ "github.com/alextanhongpin/go-graphql-template/packrd"
