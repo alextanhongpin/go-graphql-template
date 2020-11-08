@@ -3,6 +3,7 @@ type User {
   name: String!
   email: String!
   accounts: [Account!]!
+  owner: Boolean!
   #emailVerified: Boolean!
   #phoneNumber: String!
   #phoneNumberVerified: Boolean!

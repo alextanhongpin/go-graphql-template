@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/alextanhongpin/go-graphql-template/entity"
+	"github.com/alextanhongpin/go-graphql-template/pkg/middleware"
 
 	"github.com/graph-gophers/graphql-go"
 )
@@ -35,6 +36,15 @@ func (r *UserResolver) Name() string {
 // Email returns the user's unique email address.
 func (r *UserResolver) Email() string {
 	return r.user.Email.String
+}
+
+// Owner returns true if the authorized user owns this profile.
+func (r *UserResolver) Owner(ctx context.Context) bool {
+	userID, err := middleware.ContextUserID(ctx)
+	if err != nil {
+		return false
+	}
+	return r.user.ID == userID
 }
 
 func (r *UserResolver) Accounts(ctx context.Context) ([]*AccountResolver, error) {
