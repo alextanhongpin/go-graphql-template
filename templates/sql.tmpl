@@ -1,25 +1,25 @@
--- name: Create{{ pascalcase .Entity }} :one
-INSERT INTO {{ .Entity }} (name, email, preferred_{{ .Entity }}name)
-VALUES ($1, $2, $3)
+-- name: Create{{ .Entity }} :one
+INSERT INTO {{ snakecase .Entity }} (name, email)
+VALUES ($1, $2)
 RETURNING *;
 
--- name: Find{{ pascalcase .Entity }} :one
+-- name: Find{{ .Entity }} :one
 SELECT *
-FROM {{ .Entity }}
+FROM {{ snakecase .Entity }}
 WHERE id = $1;
 
--- name: Find{{ pascalcase .Entity }}sWithIDs :many
+-- name: Find{{ .Entity }}sWithIDs :many
 SELECT *
-FROM {{ .Entity }}
+FROM {{ snakecase .Entity }}
 WHERE id = any($1::uuid[]);
 
--- name: Update{{ pascalcase .Entity }} :one
-UPDATE {{ .Entity }}
+-- name: Update{{ .Entity }} :one
+UPDATE {{ snakecase .Entity }}
 SET name = COALESCE($1, name)
 WHERE id = $2
 RETURNING *;
 
--- name: Delete{{ pascalcase .Entity }} :one
-DELETE FROM {{ .Entity }}
+-- name: Delete{{ .Entity }} :one
+DELETE FROM {{ snakecase .Entity }}
 WHERE id = $1
 RETURNING *;

@@ -1,45 +1,44 @@
-package {{ .Entity }}graph
+package graph
 
 import (
 	"context"
 
 	"github.com/alextanhongpin/go-graphql-template/model"
-	"github.com/alextanhongpin/go-graphql-template/resolver"
 	"github.com/google/uuid"
 )
 
-type Query struct {
-	ctx *model.ResolverContext
+type {{ .Entity }}Query struct {
+	ctx *Context
 }
 
-type {{ pascalcase .Entity }}Connection struct {
+// New{{ .Entity }}Query returns a new query.
+func New{{ .Entity }}Query(ctx *Context) *{{ .Entity }}Query {
+	return &{{ .Entity }}Query{ctx}
+}
+
+type {{ .Entity }}Connection struct {
 	TotalCount int32
-	Edges      []{{ pascalcase .Entity }}Edge
+	Edges      []{{ .Entity }}Edge
 	PageInfo   model.PageInfo
 }
 
-type {{ pascalcase .Entity }}Edge struct {
+type {{ .Entity }}Edge struct {
 	Cursor string
-	Node   *resolver.{{ pascalcase .Entity }}Resolver
+	Node   *{{ .Entity }}Resolver
 }
 
-// NewQuery reutrns a new query.
-func NewQuery(ctx *model.ResolverContext) *Query {
-	return &Query{ctx}
-}
-
-func (q *Query) {{ pascalcase .Entity }}(ctx context.Context, args {{ pascalcase .Entity }}Args) (*resolver.{{ pascalcase .Entity }}Resolver, error) {
-	{{ .Entity }}ID, err := uuid.Parse(string(args.ID))
+func (q *{{ .Entity }}Query) {{ .Entity }}(ctx context.Context, args {{ .Entity }}Args) (*{{ .Entity }}Resolver, error) {
+	{{ camelcase .Entity }}ID, err := uuid.Parse(string(args.ID))
 	if err != nil {
 		return nil, err
 	}
 
-	{{ .Entity }}, err := q.ctx.Repository.Find{{ pascalcase .Entity }}(ctx, {{ .Entity }}ID)
+	{{ camelcase .Entity }}, err := q.ctx.Repository.Find{{ .Entity }}(ctx, {{ camelcase .Entity }}ID)
 	if err != nil {
 		return nil, err
 	}
-	return &resolver.{{ pascalcase .Entity }}Resolver{
-		{{ pascalcase .Entity }}: {{ .Entity }},
-		Ctx:  q.ctx,
+	return &{{ .Entity }}Resolver{
+		{{ camelcase .Entity }}: {{ camelcase .Entity }},
+		ctx:  q.ctx,
 	}, nil
 }

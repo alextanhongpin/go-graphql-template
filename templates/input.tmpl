@@ -1,35 +1,88 @@
-package {{ .Entity }}graph
+package graph
 
-import "github.com/graph-gophers/graphql-go"
+import (
+	"context"
 
-// {{ pascalcase .Entity }}Args represents the args for getting {{ .Entity }}.
-type {{ pascalcase .Entity }}Args struct {
-	ID graphql.ID
+	"github.com/alextanhongpin/go-graphql-template/entity"
+	"github.com/alextanhongpin/go-graphql-template/model"
+
+	"github.com/google/uuid"
+)
+
+type {{ .Entity }}Mutation struct {
+	ctx *Context
 }
 
-type Create{{ pascalcase .Entity }}Input struct {
-	Email    string
-	Name     string
-	Password string
+func New{{ .Entity }}Mutation(ctx *Context) *{{ .Entity }}Mutation {
+	return &{{ .Entity }}Mutation{ctx: ctx}
 }
 
-type Create{{ pascalcase .Entity }}Args struct {
-	Input Create{{ pascalcase .Entity }}Input
+func (m *{{ .Entity }}Mutation) Create{{ .Entity }}(ctx context.Context, args Create{{ .Entity }}Args) (*{{ .Entity }}Resolver, error) {
+	if err := m.ctx.Validator.Struct(args.Input); err != nil {
+		return nil, err
+	}
+
+	var (
+		name  = args.Input.Name
+		email = args.Input.Email
+	)
+	{{ camelcase .Entity }}, err := m.ctx.Repository.Create{{ .Entity }}(ctx, entity.Create{{ .Entity }}Params{
+		Name:              name,
+		Email:             model.NewNullString(email),
+		Preferred{{ .Entity }}name: name,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &{{ .Entity }}Resolver{
+		{{ camelcase .Entity }}: {{ camelcase .Entity }},
+		ctx:  m.ctx,
+	}, nil
 }
 
-type Update{{ pascalcase .Entity }}Input struct {
-	ID   graphql.ID
-	Name string
+func (m *{{ .Entity }}Mutation) Update{{ .Entity }}(ctx context.Context, args Update{{ .Entity }}Args) (*{{ .Entity }}Resolver, error) {
+	if err := m.ctx.Validator.Struct(args.Input); err != nil {
+		return nil, err
+	}
+
+	var (
+		name = args.Input.Name
+		id   = args.Input.ID
+	)
+	{{ camelcase .Entity }}ID, err := uuid.Parse(string(id))
+	if err != nil {
+		return nil, err
+	}
+
+	{{ camelcase .Entity }}, err := m.ctx.Repository.Update{{ .Entity }}(ctx, entity.Update{{ .Entity }}Params{
+		ID:   {{ camelcase .Entity }}ID,
+		Name: name,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &{{ .Entity }}Resolver{
+		{{ camelcase .Entity }}: {{ camelcase .Entity }},
+		ctx:  m.ctx,
+	}, nil
 }
 
-type Update{{ pascalcase .Entity }}Args struct {
-	Input Update{{ pascalcase .Entity }}Input
-}
+func (m *{{ .Entity }}Mutation) Delete{{ .Entity }}(ctx context.Context, args Delete{{ .Entity }}Args) (*{{ .Entity }}Resolver, error) {
+	if err := m.ctx.Validator.Struct(args.Input); err != nil {
+		return nil, err
+	}
 
-type Delete{{ pascalcase .Entity }}Input struct {
-	ID graphql.ID
-}
+	{{ camelcase .Entity }}ID, err := uuid.Parse(string(args.Input.ID))
+	if err != nil {
+		return nil, err
+	}
 
-type Delete{{ pascalcase .Entity }}Args struct {
-	Input Delete{{ pascalcase .Entity }}Input
+	{{ camelcase .Entity }}, err := m.ctx.Repository.Delete{{ .Entity }}(ctx, {{ camelcase .Entity }}ID)
+	if err != nil {
+		return nil, err
+	}
+	return &{{ .Entity }}Resolver{
+		{{ camelcase .Entity }}: {{ camelcase .Entity }},
+		ctx:  m.ctx,
+	}, nil
 }

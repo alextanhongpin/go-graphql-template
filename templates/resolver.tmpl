@@ -1,41 +1,55 @@
-package resolver
+package graph
 
 import (
 	"context"
-	"strings"
 
 	"github.com/alextanhongpin/go-graphql-template/entity"
-	"github.com/alextanhongpin/go-graphql-template/model"
 
 	"github.com/graph-gophers/graphql-go"
 )
 
-// {{ pascalcase .Entity }}Resolver holds the {{ .Entity }} entity to resolve.
-type {{ pascalcase .Entity }}Resolver struct {
-	{{ pascalcase .Entity }} entity.{{ pascalcase .Entity }}
-	Ctx     *model.ResolverContext
+// {{ .Entity }}Resolver holds the {{ camelcase .Entity }} entity to resolve.
+type {{ .Entity }}Resolver struct {
+	{{ camelcase .Entity }} entity.{{ .Entity }}
+	ctx  *Context
 }
 
-// New{{ pascalcase .Entity }}Resolver returns a new {{ pascalcase .Entity }} resolver.
-func New{{ pascalcase .Entity }}Resolver(ctx *model.ResolverContext, {{ .Entity }} entity.{{ pascalcase .Entity }}) *{{ pascalcase .Entity }}Resolver {
-	return &{{ pascalcase .Entity }}Resolver{
-		{{ pascalcase .Entity }}: {{ .Entity }},
-		Ctx:     ctx,
+// New{{ .Entity }}Resolver returns a new {{ .Entity }} resolver.
+func New{{ .Entity }}Resolver(ctx *Context, {{ camelcase .Entity }} entity.{{ .Entity }}) *{{ .Entity }}Resolver {
+	return &{{ .Entity }}Resolver{
+		{{ camelcase .Entity }}: {{ camelcase .Entity }},
+		ctx:  ctx,
 	}
 }
 
-// ID returns the {{ .Entity }}'s id.
-func (r *{{ pascalcase .Entity }}Resolver) ID() graphql.ID {
-	return graphql.ID(r.{{ pascalcase .Entity }}.ID.String())
+// ID returns the {{ camelcase .Entity }}'s id.
+func (r *{{ .Entity }}Resolver) ID() graphql.ID {
+	return graphql.ID(r.{{ camelcase .Entity }}.ID.String())
 }
 
-// Provider returns the {{ .Entity }}'s provider.
-func (r *{{ pascalcase .Entity }}Resolver) Provider() string {
-	provider := string(r.{{ pascalcase .Entity }}.Provider)
-	return strings.ToUpper(provider)
+// Name returns the {{ camelcase .Entity }}'s name.
+func (r *{{ .Entity }}Resolver) Name() string {
+	return r.{{ camelcase .Entity }}.Name
 }
 
-// Email returns the {{ .Entity }}'s unique email.
-func (r *{{ pascalcase .Entity }}Resolver) Email() string {
-	return r.{{ pascalcase .Entity }}.Email
+// Email returns the {{ camelcase .Entity }}'s unique email address.
+func (r *{{ .Entity }}Resolver) Email() string {
+	return r.{{ camelcase .Entity }}.Email.String
+}
+
+func (r *{{ .Entity }}Resolver) Accounts(ctx context.Context) ([]*AccountResolver, error) {
+	{{ camelcase .Entity }}ID := r.{{ camelcase .Entity }}.ID
+
+	accounts, err := r.ctx.Repository.FindAccountsWith{{ .Entity }}ID(ctx, {{ camelcase .Entity }}ID)
+	if err != nil {
+		return nil, err
+	}
+	result := make([]*AccountResolver, len(accounts))
+	for idx, account := range accounts {
+		result[idx] = &AccountResolver{
+			account: account,
+			ctx:     r.ctx,
+		}
+	}
+	return result, nil
 }

@@ -3,22 +3,22 @@ templates:
 - name: domain
   actions:
   - name: Create Resolver
-    path: templates/resolver.tmpl:/resolver/{{ .Entity }}.go
+    path: templates/resolver.tmpl:/graph/{{ snakecase .Entity }}.go
     variables:
-      Entity: '{{ snakecase .Pkg }}'
+      Entity: '{{ pascalcase .Pkg }}'
   - name: Create Mutation
-    path: templates/mutation.tmpl:/graph/{{ .Entity }}graph/mutation.go
+    path: templates/mutation.tmpl:/graph/{{ snakecase .Entity }}.mutation.go
     variables:
-      Entity: '{{ snakecase .Pkg }}'
+      Entity: '{{ pascalcase .Pkg }}'
   - name: Create Query
-    path: templates/query.tmpl:/graph/{{ .Entity }}graph/query.go
+    path: templates/query.tmpl:/graph/{{ snakecase .Entity }}.query.go
     variables:
-      Entity: '{{ snakecase .Pkg }}'
+      Entity: '{{ pascalcase .Pkg }}'
   - name: Create Input
-    path: templates/input.tmpl:/graph/{{ .Entity }}graph/input.go
+    path: templates/input.tmpl:/graph/{{ snakecase .Entity }}.input.go
     variables:
-      Entity: '{{ snakecase .Pkg }}'
+      Entity: '{{ pascalcase .Pkg }}'
   - name: Create SQL
-    path: templates/sql.tmpl:/sql/{{ .Entity }}.sql
+    path: templates/sql.tmpl:/sql/{{ snakecase .Entity }}.sql
     variables:
-      Entity: '{{ snakecase .Pkg }}'
+      Entity: '{{ pascalcase .Pkg }}'
