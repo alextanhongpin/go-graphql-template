@@ -1,16 +1,20 @@
 # Graphql golang
 
-- [ ] authentication
-- [ ] rate limiting
-- [ ] designing graphql schema
-- [ ] dataloaders
+## Middleware
+- [x] CORS
+- [x] DataLoader - solving the N+1 problem
+- [x] Authorization - validates JWT tokens
 
-- [x] integrate background worker
-- [x] integrate redis to calculate page views
-- [x] get client ip + id for unique page views
-- [] notification logic
-- [] answer/question count logic
-- [] comments logic
+## Observability
+- [x] Logging - logging with correlation id, and also ease of integration with Jaeger for tracing
+
+## Reliability
+- [x] Graceful shutdown - signals termination to running processes (Database connections, redis connections, background worker etc) before shutting down the server
+- [x] Retry database connection - attempts to reconnect to database if fails
+
+## Database
+- [x] Transactions - operations with transactions possible
+- [x] Code generation - using sqlc package to generate repository layer
 
 
 ## Tests Assertions
