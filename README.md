@@ -17,3 +17,14 @@
 - using goconvey and testify suite/assertions
 
 https://github.com/smartystreets/goconvey/wiki/Assertions
+
+
+## Pre-commit
+To enable, change the `.git/hooks/pre-commit`:
+```
+#!/bin/sh
+
+sh scripts/pre-commit.sh
+[ $? -ne 0 ] && exit 1;
+exit 0;
+```

@@ -1,14 +1,13 @@
+ENV ?= development
+-include .env.$(ENV)
 -include .env
 export
 
 start: gen
-	@go run main.go
-
-pkg:
-	@pkger -include /schema
+	@go run cmd/server/main.go
 
 # Include it at the bottom so that the commands sequence is respected.
-include pkg/database/Makefile
+include Makefile.db Makefile.dk
 
 .PHONY: worker
 worker:
@@ -31,12 +30,10 @@ integration-test: # Run integration tests with the +build integration flag.
 it: integration-test
 
 
-up: # Starts docker-compose.
-	@docker-compose up -d
-
-down: # Stops docker-compose.
-	@docker-compose down
-
-
 service-%:
 	gen generate -t domain $*
+
+gen: ## Generate packr migration bindata.
+	@go generate ./...
+	@pkger
+	@cd internal/postgres/ && sqlc generate

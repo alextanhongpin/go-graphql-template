@@ -1,0 +1,5 @@
+up: # Starts docker-compose.
+	@docker-compose up -d
+
+down: # Stops docker-compose.
+	@docker-compose down

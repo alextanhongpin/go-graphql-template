@@ -1,0 +1,26 @@
+DBCONFIG_PATH := ./internal/postgres/dbconfig.yml
+
+MODULES := go.mod go.sum
+
+$(MODULES):
+	@go get ./...
+	@go mod tidy
+
+install: $(MODULES) ## Install required dependencies
+	@# For migration.
+	@go get -u -v github.com/rubenv/sql-migrate/...
+
+	@# Library installation.
+	@go get -u github.com/gobuffalo/packr/v2/...
+
+	@# Binary installation.
+	@go get -u github.com/gobuffalo/packr/v2/packr2
+
+sql-%: ## Creates a new migration
+	@sql-migrate new -config=${DBCONFIG_PATH} $*
+
+migrate: ## Run the migration
+	@sql-migrate up -config=${DBCONFIG_PATH} -limit=${or $n,0}
+
+rollback: ## Undo the last migration
+	@sql-migrate down -config=${DBCONFIG_PATH} -limit $${n:=0}
