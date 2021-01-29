@@ -1,42 +1,23 @@
-package graph
+package middleware
 
 import (
-	"context"
 	"errors"
 	"fmt"
 	"net/http"
 	"strings"
 
-	"github.com/alextanhongpin/pkg/contextkey"
+	"github.com/alextanhongpin/go-graphql-template/external/session"
 	"github.com/alextanhongpin/pkg/gojwt"
 	"github.com/google/uuid"
 )
 
-var userIDKey = contextkey.Key("user")
-
-var (
-	ErrEmptyAuthHeader   = errors.New("Authorization header is not provided")
-	ErrInvalidAuthHeader = errors.New("Authorization header is invalid")
-	ErrUnauthorized      = errors.New("unauthorized")
-)
-
-func UserID(ctx context.Context) (uuid.UUID, error) {
-	id, ok := userIDKey.Value(ctx).(uuid.UUID)
-	if !ok {
-		return id, ErrUnauthorized
-	}
-	return id, nil
-}
-
-func WithUserID(ctx context.Context, id uuid.UUID) context.Context {
-	return context.WithValue(ctx, userIDKey, id)
-}
+var ErrInvalidAuthHeader = errors.New("Authorization header is invalid")
 
 type Authorizer interface {
 	Verify(token string) (*gojwt.Claims, error)
 }
 
-func BuildAuthz(authz Authorizer) Middleware {
+func Authz(authz Authorizer) Middleware {
 	return func(next http.Handler) http.Handler {
 		authorize := func(auth string) (*gojwt.Claims, error) {
 			if auth == "" {
@@ -73,7 +54,7 @@ func BuildAuthz(authz Authorizer) Middleware {
 					http.Error(w, err.Error(), http.StatusUnauthorized)
 					return
 				}
-				ctx = WithUserID(ctx, userID)
+				ctx = session.WithUserID(ctx, userID)
 			}
 			next.ServeHTTP(w, r.WithContext(ctx))
 		})

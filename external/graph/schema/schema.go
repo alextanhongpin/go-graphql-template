@@ -1,21 +1,32 @@
-package graph
+package schema
 
 import (
 	"io/ioutil"
 	"log"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/markbates/pkger"
 )
 
-func LoadSchema(dir string) string {
+var String string
+
+func init() {
+	String = Load("github.com/alextanhongpin/go-graphql-template:/external/graph/schema")
+}
+
+func Load(dir string) string {
 	var schemas []string
 	if err := pkger.Walk(dir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
 		if info.IsDir() {
+			return nil
+		}
+
+		if filepath.Ext(path) != ".gql" {
 			return nil
 		}
 

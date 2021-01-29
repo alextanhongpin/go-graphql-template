@@ -3,8 +3,8 @@ package mutation
 import (
 	"context"
 
-	"github.com/alextanhongpin/go-graphql-template/external/graph"
 	"github.com/alextanhongpin/go-graphql-template/external/graph/resolver"
+	"github.com/alextanhongpin/go-graphql-template/external/session"
 )
 
 type AccountMutation struct {
@@ -20,7 +20,7 @@ func (m *AccountMutation) CreateAccount(ctx context.Context, args CreateAccountA
 		return nil, err
 	}
 
-	q, err := graph.Querier(ctx)
+	q, err := session.Querier(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -39,7 +39,7 @@ func (m *AccountMutation) UpdateAccount(ctx context.Context, args UpdateAccountA
 		return nil, err
 	}
 
-	q, err := graph.Querier(ctx)
+	q, err := session.Querier(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -58,7 +58,7 @@ func (m *AccountMutation) DeleteAccount(ctx context.Context, args DeleteAccountA
 		return nil, err
 	}
 
-	q, err := graph.Querier(ctx)
+	q, err := session.Querier(ctx)
 	if err != nil {
 		return nil, err
 	}

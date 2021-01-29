@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/alextanhongpin/go-graphql-template/domain/model"
-	"github.com/alextanhongpin/go-graphql-template/external/graph"
 	"github.com/alextanhongpin/go-graphql-template/external/graph/resolver"
+	"github.com/alextanhongpin/go-graphql-template/external/session"
 	"github.com/google/uuid"
 	"github.com/graph-gophers/graphql-go"
 )
@@ -40,7 +40,7 @@ func (q *AccountQuery) Account(ctx context.Context, args AccountArgs) (*resolver
 		return nil, err
 	}
 
-	r, err := graph.Querier(ctx)
+	r, err := session.Querier(ctx)
 	if err != nil {
 		return nil, err
 	}

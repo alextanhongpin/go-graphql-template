@@ -1,24 +1,12 @@
-package graph
+package middleware
 
 import (
-	"context"
 	"net"
 	"net/http"
 	"strings"
 
-	"github.com/alextanhongpin/pkg/contextkey"
+	"github.com/alextanhongpin/go-graphql-template/external/session"
 )
-
-var clientIPKey = contextkey.Key("client-ip")
-
-func ClientIP(ctx context.Context) string {
-	clientIP, _ := clientIPKey.Value(ctx).(string)
-	return clientIP
-}
-
-func WithClientIP(ctx context.Context, clientIP string) context.Context {
-	return context.WithValue(ctx, clientIPKey, clientIP)
-}
 
 // The implementation is similar to gin-gonic's .ClientIP method.
 func clientIPFromRequest(r *http.Request) string {
@@ -36,11 +24,10 @@ func clientIPFromRequest(r *http.Request) string {
 	return ""
 }
 
-func ClientIPProvider(next http.Handler) http.Handler {
+func ClientIP(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		clientIP := clientIPFromRequest(r)
-		ctx := r.Context()
-		ctx = WithClientIP(ctx, clientIP)
+		ctx := session.WithClientIP(r.Context(), clientIP)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }

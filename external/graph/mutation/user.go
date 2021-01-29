@@ -3,8 +3,9 @@ package mutation
 import (
 	"context"
 
-	"github.com/alextanhongpin/go-graphql-template/external/graph"
 	"github.com/alextanhongpin/go-graphql-template/external/graph/resolver"
+	"github.com/alextanhongpin/go-graphql-template/external/session"
+	"github.com/alextanhongpin/go-graphql-template/internal"
 )
 
 type UserMutation struct {
@@ -15,11 +16,11 @@ func NewUserMutation() *UserMutation {
 }
 
 func (m *UserMutation) CreateUser(ctx context.Context, args CreateUserArgs) (*resolver.UserResolver, error) {
-	if err := graph.Validate(ctx, &args.Input); err != nil {
+	if err := internal.Validate(ctx, &args.Input); err != nil {
 		return nil, err
 	}
 
-	q, err := graph.Querier(ctx)
+	q, err := session.Querier(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -33,7 +34,7 @@ func (m *UserMutation) CreateUser(ctx context.Context, args CreateUserArgs) (*re
 }
 
 func (m *UserMutation) UpdateUser(ctx context.Context, args UpdateUserArgs) (*resolver.UserResolver, error) {
-	if err := graph.Validate(ctx, &args.Input); err != nil {
+	if err := internal.Validate(ctx, &args.Input); err != nil {
 		return nil, err
 	}
 
@@ -42,7 +43,7 @@ func (m *UserMutation) UpdateUser(ctx context.Context, args UpdateUserArgs) (*re
 		return nil, err
 	}
 
-	q, err := graph.Querier(ctx)
+	q, err := session.Querier(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -56,7 +57,7 @@ func (m *UserMutation) UpdateUser(ctx context.Context, args UpdateUserArgs) (*re
 }
 
 func (m *UserMutation) DeleteUser(ctx context.Context, args DeleteUserArgs) (*resolver.UserResolver, error) {
-	if err := graph.Validate(ctx, &args.Input); err != nil {
+	if err := internal.Validate(ctx, &args.Input); err != nil {
 		return nil, err
 	}
 
@@ -65,7 +66,7 @@ func (m *UserMutation) DeleteUser(ctx context.Context, args DeleteUserArgs) (*re
 		return nil, err
 	}
 
-	q, err := graph.Querier(ctx)
+	q, err := session.Querier(ctx)
 	if err != nil {
 		return nil, err
 	}

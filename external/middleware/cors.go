@@ -1,4 +1,4 @@
-package graph
+package middleware
 
 import "net/http"
 

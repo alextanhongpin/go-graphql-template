@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/alextanhongpin/go-graphql-template/domain/entity"
-	"github.com/alextanhongpin/go-graphql-template/external/graph"
+	"github.com/alextanhongpin/go-graphql-template/external/session"
 
 	"github.com/graph-gophers/graphql-go"
 )
@@ -41,7 +41,7 @@ func (r *AccountResolver) Email() string {
 // User returns the account's user.
 func (r *AccountResolver) User(ctx context.Context) (*PartialUserResolver, error) {
 	userID := r.account.UserID
-	loader := graph.DataLoader(ctx)
+	loader := session.DataLoader(ctx)
 	user, err := loader.User.Load(ctx, userID.String())
 	if err != nil {
 		return nil, err

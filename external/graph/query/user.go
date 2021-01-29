@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/alextanhongpin/go-graphql-template/domain/model"
-	"github.com/alextanhongpin/go-graphql-template/external/graph"
 	"github.com/alextanhongpin/go-graphql-template/external/graph/resolver"
+	"github.com/alextanhongpin/go-graphql-template/external/session"
 )
 
 type UserQuery struct{}
@@ -32,7 +32,7 @@ func (q *UserQuery) User(ctx context.Context, args UserArgs) (*resolver.UserReso
 		return nil, err
 	}
 
-	r, err := graph.Querier(ctx)
+	r, err := session.Querier(ctx)
 	if err != nil {
 		return nil, err
 	}

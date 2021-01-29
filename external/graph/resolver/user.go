@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/alextanhongpin/go-graphql-template/domain/entity"
-	"github.com/alextanhongpin/go-graphql-template/external/graph"
+	"github.com/alextanhongpin/go-graphql-template/external/session"
 
 	"github.com/graph-gophers/graphql-go"
 )
@@ -36,7 +36,7 @@ func (r *UserResolver) Email() string {
 
 // Owner returns true if the authorized user owns this profile.
 func (r *UserResolver) Owner(ctx context.Context) bool {
-	userID, err := graph.UserID(ctx)
+	userID, err := session.UserID(ctx)
 	if err != nil {
 		return false
 	}
@@ -46,7 +46,7 @@ func (r *UserResolver) Owner(ctx context.Context) bool {
 func (r *UserResolver) Accounts(ctx context.Context) ([]*AccountResolver, error) {
 	userID := r.user.ID
 
-	q, err := graph.Querier(ctx)
+	q, err := session.Querier(ctx)
 	if err != nil {
 		return nil, err
 	}
