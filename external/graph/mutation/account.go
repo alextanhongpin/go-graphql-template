@@ -1,9 +1,10 @@
-package resolver
+package mutation
 
 import (
 	"context"
 
 	"github.com/alextanhongpin/go-graphql-template/external/graph"
+	"github.com/alextanhongpin/go-graphql-template/external/graph/resolver"
 )
 
 type AccountMutation struct {
@@ -13,7 +14,7 @@ func NewAccountMutation() *AccountMutation {
 	return &AccountMutation{}
 }
 
-func (m *AccountMutation) CreateAccount(ctx context.Context, args CreateAccountArgs) (*AccountResolver, error) {
+func (m *AccountMutation) CreateAccount(ctx context.Context, args CreateAccountArgs) (*resolver.AccountResolver, error) {
 	p, err := args.Input.ToRepoCreateAccount()
 	if err != nil {
 		return nil, err
@@ -29,10 +30,10 @@ func (m *AccountMutation) CreateAccount(ctx context.Context, args CreateAccountA
 		return nil, err
 	}
 
-	return NewAccountResolver(account), nil
+	return resolver.NewAccountResolver(account), nil
 }
 
-func (m *AccountMutation) UpdateAccount(ctx context.Context, args UpdateAccountArgs) (*AccountResolver, error) {
+func (m *AccountMutation) UpdateAccount(ctx context.Context, args UpdateAccountArgs) (*resolver.AccountResolver, error) {
 	p, err := args.Input.ToRepoUpdateAccount()
 	if err != nil {
 		return nil, err
@@ -48,10 +49,10 @@ func (m *AccountMutation) UpdateAccount(ctx context.Context, args UpdateAccountA
 		return nil, err
 	}
 
-	return NewAccountResolver(account), nil
+	return resolver.NewAccountResolver(account), nil
 }
 
-func (m *AccountMutation) DeleteAccount(ctx context.Context, args DeleteAccountArgs) (*AccountResolver, error) {
+func (m *AccountMutation) DeleteAccount(ctx context.Context, args DeleteAccountArgs) (*resolver.AccountResolver, error) {
 	p, err := args.Input.ToRepoDeleteAccount()
 	if err != nil {
 		return nil, err
@@ -67,5 +68,5 @@ func (m *AccountMutation) DeleteAccount(ctx context.Context, args DeleteAccountA
 		return nil, err
 	}
 
-	return NewAccountResolver(account), nil
+	return resolver.NewAccountResolver(account), nil
 }

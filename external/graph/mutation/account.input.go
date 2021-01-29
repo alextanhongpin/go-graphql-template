@@ -1,4 +1,4 @@
-package resolver
+package mutation
 
 import (
 	"github.com/alextanhongpin/go-graphql-template/domain/entity"
@@ -6,10 +6,7 @@ import (
 	"github.com/graph-gophers/graphql-go"
 )
 
-// AccountArgs represents the args for getting account.
-type AccountArgs struct {
-	ID graphql.ID
-}
+// We can also place inputs in a folder called inputs.
 
 type CreateAccountArgs struct {
 	Input CreateAccountInput

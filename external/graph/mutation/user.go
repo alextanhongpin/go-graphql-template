@@ -1,9 +1,10 @@
-package resolver
+package mutation
 
 import (
 	"context"
 
 	"github.com/alextanhongpin/go-graphql-template/external/graph"
+	"github.com/alextanhongpin/go-graphql-template/external/graph/resolver"
 )
 
 type UserMutation struct {
@@ -13,7 +14,7 @@ func NewUserMutation() *UserMutation {
 	return &UserMutation{}
 }
 
-func (m *UserMutation) CreateUser(ctx context.Context, args CreateUserArgs) (*UserResolver, error) {
+func (m *UserMutation) CreateUser(ctx context.Context, args CreateUserArgs) (*resolver.UserResolver, error) {
 	if err := graph.Validate(ctx, &args.Input); err != nil {
 		return nil, err
 	}
@@ -28,10 +29,10 @@ func (m *UserMutation) CreateUser(ctx context.Context, args CreateUserArgs) (*Us
 		return nil, err
 	}
 
-	return NewUserResolver(user), nil
+	return resolver.NewUserResolver(user), nil
 }
 
-func (m *UserMutation) UpdateUser(ctx context.Context, args UpdateUserArgs) (*UserResolver, error) {
+func (m *UserMutation) UpdateUser(ctx context.Context, args UpdateUserArgs) (*resolver.UserResolver, error) {
 	if err := graph.Validate(ctx, &args.Input); err != nil {
 		return nil, err
 	}
@@ -51,10 +52,10 @@ func (m *UserMutation) UpdateUser(ctx context.Context, args UpdateUserArgs) (*Us
 		return nil, err
 	}
 
-	return NewUserResolver(user), nil
+	return resolver.NewUserResolver(user), nil
 }
 
-func (m *UserMutation) DeleteUser(ctx context.Context, args DeleteUserArgs) (*UserResolver, error) {
+func (m *UserMutation) DeleteUser(ctx context.Context, args DeleteUserArgs) (*resolver.UserResolver, error) {
 	if err := graph.Validate(ctx, &args.Input); err != nil {
 		return nil, err
 	}
@@ -74,5 +75,5 @@ func (m *UserMutation) DeleteUser(ctx context.Context, args DeleteUserArgs) (*Us
 		return nil, err
 	}
 
-	return NewUserResolver(user), nil
+	return resolver.NewUserResolver(user), nil
 }

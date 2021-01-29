@@ -1,6 +1,6 @@
 // +build integration
 
-package resolver_test
+package mutation_test
 
 import (
 	"context"

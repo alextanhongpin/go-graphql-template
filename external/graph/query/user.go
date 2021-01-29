@@ -1,10 +1,11 @@
-package resolver
+package query
 
 import (
 	"context"
 
 	"github.com/alextanhongpin/go-graphql-template/domain/model"
 	"github.com/alextanhongpin/go-graphql-template/external/graph"
+	"github.com/alextanhongpin/go-graphql-template/external/graph/resolver"
 )
 
 type UserQuery struct{}
@@ -22,10 +23,10 @@ type UserConnection struct {
 
 type UserEdge struct {
 	Cursor string
-	Node   *UserResolver
+	Node   *resolver.UserResolver
 }
 
-func (q *UserQuery) User(ctx context.Context, args UserArgs) (*UserResolver, error) {
+func (q *UserQuery) User(ctx context.Context, args UserArgs) (*resolver.UserResolver, error) {
 	p, err := args.ToRepoFindUser()
 	if err != nil {
 		return nil, err
@@ -41,5 +42,5 @@ func (q *UserQuery) User(ctx context.Context, args UserArgs) (*UserResolver, err
 		return nil, err
 	}
 
-	return NewUserResolver(user), nil
+	return resolver.NewUserResolver(user), nil
 }
