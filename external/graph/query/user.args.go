@@ -10,6 +10,6 @@ type UserArgs struct {
 	ID graphql.ID
 }
 
-func (u UserArgs) ToRepoFindUser() (uuid.UUID, error) {
+func (u UserArgs) ToServiceFindUser() (uuid.UUID, error) {
 	return uuid.Parse(string(u.ID))
 }

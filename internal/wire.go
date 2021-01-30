@@ -1,13 +1,21 @@
 package internal
 
-import "github.com/google/wire"
+import (
+	"database/sql"
+
+	"github.com/alextanhongpin/go-graphql-template/domain/entity"
+	"github.com/google/wire"
+)
 
 var Set = wire.NewSet(
-	NewRedisConfig,
-	NewRedis,
 	NewDB,
+	wire.Bind(new(entity.DBTX), new(*sql.DB)),
+	entity.New,
+	wire.Bind(new(entity.Querier), new(*entity.Queries)),
 	NewLoggerConfig,
 	NewLogger,
-	NewAuthorizerConfig,
-	NewAuthorizer,
+	NewRedisConfig,
+	NewRedis,
+	NewValidator,
+	wire.Bind(new(Validator), new(*JsonValidator)),
 )

@@ -1,9 +1,11 @@
 package mutation
 
 import (
-	"github.com/alextanhongpin/go-graphql-template/domain/entity"
 	"github.com/google/uuid"
 	"github.com/graph-gophers/graphql-go"
+
+	"github.com/alextanhongpin/go-graphql-template/domain/account"
+	"github.com/alextanhongpin/go-graphql-template/domain/entity"
 )
 
 // We can also place inputs in a folder called inputs.
@@ -18,15 +20,15 @@ type CreateAccountInput struct {
 	Password string
 }
 
-func (i CreateAccountInput) ToRepoCreateAccount() (entity.CreateAccountParams, error) {
-	var p entity.CreateAccountParams
+func (i CreateAccountInput) ToServiceCreateAccount() (account.CreateAccountDto, error) {
+	var dto account.CreateAccountDto
 
 	userID, err := uuid.Parse(string(i.UserID))
 	if err != nil {
-		return p, err
+		return dto, err
 	}
 
-	return entity.CreateAccountParams{
+	return account.CreateAccountDto{
 		Uid:      i.Email,
 		Provider: entity.ProviderEmail,
 		Token:    i.Password,
@@ -44,14 +46,14 @@ type UpdateAccountInput struct {
 	Email string
 }
 
-func (i UpdateAccountInput) ToRepoUpdateAccount() (entity.UpdateAccountParams, error) {
-	var p entity.UpdateAccountParams
+func (i UpdateAccountInput) ToServiceUpdateAccount() (account.UpdateAccountDto, error) {
+	var dto account.UpdateAccountDto
 	id, err := uuid.Parse(string(i.ID))
 	if err != nil {
-		return p, err
+		return dto, err
 	}
 
-	return entity.UpdateAccountParams{
+	return account.UpdateAccountDto{
 		ID:    id,
 		Email: i.Email,
 	}, nil
@@ -65,6 +67,6 @@ type DeleteAccountInput struct {
 	ID graphql.ID
 }
 
-func (i DeleteAccountInput) ToRepoDeleteAccount() (uuid.UUID, error) {
+func (i DeleteAccountInput) ToServiceDeleteAccount() (uuid.UUID, error) {
 	return uuid.Parse(string(i.ID))
 }

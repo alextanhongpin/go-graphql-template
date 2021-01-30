@@ -27,17 +27,17 @@ type UserEdge struct {
 }
 
 func (q *UserQuery) User(ctx context.Context, args UserArgs) (*resolver.UserResolver, error) {
-	p, err := args.ToRepoFindUser()
+	p, err := args.ToServiceFindUser()
 	if err != nil {
 		return nil, err
 	}
 
-	r, err := session.Querier(ctx)
+	usersvc, err := session.UserService(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	user, err := r.FindUser(ctx, p)
+	user, err := usersvc.FindUser(ctx, p)
 	if err != nil {
 		return nil, err
 	}

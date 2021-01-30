@@ -4,6 +4,6 @@ packages:
     emit_json_tags: false
     emit_prepared_queries: false
     emit_interface: true
-    path: "../../app/domain/entity"
+    path: "../../domain/entity"
     queries: "./sql/"
     schema: "./migrations/"

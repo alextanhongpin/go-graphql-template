@@ -2,34 +2,19 @@ package main
 
 import (
 	"context"
+	"net/http"
 	"time"
 
-	"github.com/alextanhongpin/go-graphql-template/domain/entity"
-	"github.com/alextanhongpin/go-graphql-template/external"
-	"github.com/alextanhongpin/go-graphql-template/internal"
 	"github.com/alextanhongpin/pkg/grace"
 )
 
 func main() {
 	var sg grace.ShutdownGroup
+	port := 8080
 
-	db, close := internal.NewDB()
-	defer close()
-
-	_, sync := internal.NewLogger(internal.NewLoggerConfig())
-	defer sync()
-
-	stop := internal.NewTracer()
+	r, stop := New()
 	defer stop()
-
-	q := entity.New(db)
-
-	authz := internal.NewAuthorizer(internal.NewAuthorizerConfig())
-
-	mux := external.NewGraph(q, authz)
-
-	shutdown := grace.New(mux, 8080)
-	sg.Add(shutdown)
+	sg.Add(run(r, port))
 
 	<-grace.Signal()
 
@@ -37,4 +22,8 @@ func main() {
 	defer cancel()
 
 	sg.Close(ctx)
+}
+
+func run(r http.Handler, port int) func(context.Context) {
+	return grace.New(r, port)
 }

@@ -4,7 +4,7 @@ import (
 	"context"
 	"strings"
 
-	"github.com/alextanhongpin/go-graphql-template/domain/entity"
+	"github.com/alextanhongpin/go-graphql-template/domain/account"
 	"github.com/alextanhongpin/go-graphql-template/external/session"
 
 	"github.com/graph-gophers/graphql-go"
@@ -12,13 +12,13 @@ import (
 
 // AccountResolver holds the account entity to resolve.
 type AccountResolver struct {
-	account entity.Account
+	account account.Account
 }
 
 // NewAccountResolver returns a new Account resolver.
-func NewAccountResolver(account entity.Account) *AccountResolver {
+func NewAccountResolver(acc account.Account) *AccountResolver {
 	return &AccountResolver{
-		account: account,
+		account: acc,
 	}
 }
 

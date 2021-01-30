@@ -3,7 +3,7 @@ package session
 import (
 	"context"
 
-	"github.com/alextanhongpin/go-graphql-template/pkg/loader"
+	"github.com/alextanhongpin/go-graphql-template/external/graph/loader"
 	"github.com/alextanhongpin/pkg/contextkey"
 )
 

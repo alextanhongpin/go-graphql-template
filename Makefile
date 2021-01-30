@@ -4,7 +4,7 @@ ENV ?= development
 export
 
 start: gen
-	@go run cmd/server/main.go
+	@go run cmd/server/{main,wire_gen}.go
 
 # Include it at the bottom so that the commands sequence is respected.
 include Makefile.db Makefile.dk
@@ -35,5 +35,3 @@ service-%:
 
 gen: ## Generate packr migration bindata.
 	@go generate ./...
-	@pkger
-	@cd internal/postgres/ && sqlc generate

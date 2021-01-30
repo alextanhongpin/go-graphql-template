@@ -4,19 +4,20 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/alextanhongpin/go-graphql-template/domain/entity"
 	"github.com/google/uuid"
 	"github.com/graph-gophers/dataloader"
+
+	"github.com/alextanhongpin/go-graphql-template/domain/user"
 )
 
 type UserLoader interface {
-	Load(ctx context.Context, id string) (entity.User, error)
-	LoadMany(ctx context.Context, ids []string) ([]entity.User, []error)
-	Set(ctx context.Context, q entity.User) dataloader.Interface
+	Load(ctx context.Context, id string) (user.User, error)
+	LoadMany(ctx context.Context, ids []string) ([]user.User, []error)
+	Set(ctx context.Context, q user.User) dataloader.Interface
 }
 
 type userFinder interface {
-	FindUsersWithIDs(ctx context.Context, ids []uuid.UUID) ([]entity.User, error)
+	FindUsersWithIDs(ctx context.Context, ids []uuid.UUID) ([]user.User, error)
 }
 
 type User struct {
@@ -26,6 +27,7 @@ type User struct {
 func NewUser(finder userFinder) *User {
 	l := new(User)
 
+	// TODO: Check implementation.
 	batchFn := func(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
 		var ids []uuid.UUID
 		for _, key := range keys {
@@ -61,16 +63,16 @@ func NewUser(finder userFinder) *User {
 	return l
 }
 
-func (u *User) Load(ctx context.Context, id string) (entity.User, error) {
-	var user entity.User
+func (u *User) Load(ctx context.Context, id string) (user.User, error) {
+	var usr user.User
 	result, err := u.loader.Load(ctx, dataloader.StringKey(id))()
 	if err != nil {
-		return user, err
+		return usr, err
 	}
-	return result.(entity.User), nil
+	return result.(user.User), nil
 }
 
-func (u *User) LoadMany(ctx context.Context, ids []string) ([]entity.User, []error) {
+func (u *User) LoadMany(ctx context.Context, ids []string) ([]user.User, []error) {
 	keys := make([]dataloader.Key, len(ids))
 	for i, id := range ids {
 		keys[i] = dataloader.StringKey(id)
@@ -79,15 +81,15 @@ func (u *User) LoadMany(ctx context.Context, ids []string) ([]entity.User, []err
 	if err != nil {
 		return nil, err
 	}
-	users := make([]entity.User, len(result))
+	users := make([]user.User, len(result))
 	for i, r := range result {
-		users[i] = r.(entity.User)
+		users[i] = r.(user.User)
 	}
 	return users, nil
 }
 
 // Set adds the loaded entity to the cache.
-func (u *User) Set(ctx context.Context, user entity.User) dataloader.Interface {
-	key := dataloader.StringKey(user.ID.String())
-	return u.loader.Prime(ctx, key, user)
+func (u *User) Set(ctx context.Context, usr user.User) dataloader.Interface {
+	key := dataloader.StringKey(usr.ID.String())
+	return u.loader.Prime(ctx, key, usr)
 }

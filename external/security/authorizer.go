@@ -1,4 +1,4 @@
-package internal
+package security
 
 import (
 	"errors"
@@ -9,6 +9,14 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/kelseyhightower/envconfig"
 )
+
+type Claims struct {
+	*gojwt.Claims
+}
+
+type Authorizer interface {
+	Verify(token string) (*Claims, error)
+}
 
 type JwtConfig struct {
 	Audience string `envconfig:"JWT_AUDIENCE"`
@@ -24,7 +32,21 @@ func NewAuthorizerConfig() JwtConfig {
 	return cfg
 }
 
-func NewAuthorizer(cfg JwtConfig) *gojwt.JwtSigner {
+type JwtAuthorizer struct {
+	gojwt.Signer
+}
+
+func (authz *JwtAuthorizer) Verify(token string) (*Claims, error) {
+	claims, err := authz.Signer.Verify(token)
+	if err != nil {
+		return nil, err
+	}
+	return &Claims{
+		Claims: claims,
+	}, nil
+}
+
+func NewAuthorizer(cfg JwtConfig) *JwtAuthorizer {
 	var (
 		audience     = cfg.Audience
 		issuer       = cfg.Issuer
@@ -39,17 +61,19 @@ func NewAuthorizer(cfg JwtConfig) *gojwt.JwtSigner {
 		return nil
 	}
 
-	return gojwt.New(
-		gojwt.Option{
-			Secret:       []byte(secret),
-			ExpiresAfter: expiresAfter,
-			DefaultClaims: &gojwt.Claims{
-				StandardClaims: jwt.StandardClaims{
-					Audience: audience,
-					Issuer:   issuer,
+	return &JwtAuthorizer{
+		Signer: gojwt.New(
+			gojwt.Option{
+				Secret:       []byte(secret),
+				ExpiresAfter: expiresAfter,
+				DefaultClaims: &gojwt.Claims{
+					StandardClaims: jwt.StandardClaims{
+						Audience: audience,
+						Issuer:   issuer,
+					},
 				},
+				Validator: validator,
 			},
-			Validator: validator,
-		},
-	)
+		),
+	}
 }

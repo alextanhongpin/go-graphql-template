@@ -7,16 +7,23 @@ import (
 	"github.com/leebenson/conform"
 )
 
-var v *validator.Validate
-
-func init() {
-	v = validator.New()
+type Validator interface {
+	Validate(ctx context.Context, js interface{}) error
 }
 
-func Validate(ctx context.Context, js interface{}) error {
+type JsonValidator struct {
+	v *validator.Validate
+}
+
+func NewValidator() *JsonValidator {
+	return &JsonValidator{
+		v: validator.New(),
+	}
+}
+
+func (v JsonValidator) Validate(ctx context.Context, js interface{}) error {
 	if err := conform.Strings(js); err != nil {
 		return err
 	}
-
-	return v.Struct(js)
+	return v.v.Struct(js)
 }

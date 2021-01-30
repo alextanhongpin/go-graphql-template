@@ -6,20 +6,16 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/alextanhongpin/go-graphql-template/external/security"
 	"github.com/alextanhongpin/go-graphql-template/external/session"
-	"github.com/alextanhongpin/pkg/gojwt"
 	"github.com/google/uuid"
 )
 
 var ErrInvalidAuthHeader = errors.New("Authorization header is invalid")
 
-type Authorizer interface {
-	Verify(token string) (*gojwt.Claims, error)
-}
-
-func Authz(authz Authorizer) Middleware {
+func Authz(authz security.Authorizer) Middleware {
 	return func(next http.Handler) http.Handler {
-		authorize := func(auth string) (*gojwt.Claims, error) {
+		authorize := func(auth string) (*security.Claims, error) {
 			if auth == "" {
 				return nil, nil
 			}

@@ -40,12 +40,12 @@ func (q *AccountQuery) Account(ctx context.Context, args AccountArgs) (*resolver
 		return nil, err
 	}
 
-	r, err := session.Querier(ctx)
+	accountsvc, err := session.AccountService(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	account, err := r.FindAccount(ctx, accountID)
+	account, err := accountsvc.FindAccount(ctx, accountID)
 	if err != nil {
 		return nil, err
 	}

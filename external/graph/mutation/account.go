@@ -15,17 +15,17 @@ func NewAccountMutation() *AccountMutation {
 }
 
 func (m *AccountMutation) CreateAccount(ctx context.Context, args CreateAccountArgs) (*resolver.AccountResolver, error) {
-	p, err := args.Input.ToRepoCreateAccount()
+	p, err := args.Input.ToServiceCreateAccount()
 	if err != nil {
 		return nil, err
 	}
 
-	q, err := session.Querier(ctx)
+	accountsvc, err := session.AccountService(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	account, err := q.CreateAccount(ctx, p)
+	account, err := accountsvc.CreateAccount(ctx, p)
 	if err != nil {
 		return nil, err
 	}
@@ -34,17 +34,17 @@ func (m *AccountMutation) CreateAccount(ctx context.Context, args CreateAccountA
 }
 
 func (m *AccountMutation) UpdateAccount(ctx context.Context, args UpdateAccountArgs) (*resolver.AccountResolver, error) {
-	p, err := args.Input.ToRepoUpdateAccount()
+	p, err := args.Input.ToServiceUpdateAccount()
 	if err != nil {
 		return nil, err
 	}
 
-	q, err := session.Querier(ctx)
+	accountsvc, err := session.AccountService(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	account, err := q.UpdateAccount(ctx, p)
+	account, err := accountsvc.UpdateAccount(ctx, p)
 	if err != nil {
 		return nil, err
 	}
@@ -53,17 +53,17 @@ func (m *AccountMutation) UpdateAccount(ctx context.Context, args UpdateAccountA
 }
 
 func (m *AccountMutation) DeleteAccount(ctx context.Context, args DeleteAccountArgs) (*resolver.AccountResolver, error) {
-	p, err := args.Input.ToRepoDeleteAccount()
+	p, err := args.Input.ToServiceDeleteAccount()
 	if err != nil {
 		return nil, err
 	}
 
-	q, err := session.Querier(ctx)
+	accountsvc, err := session.AccountService(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	account, err := q.DeleteAccount(ctx, p)
+	account, err := accountsvc.DeleteAccount(ctx, p)
 	if err != nil {
 		return nil, err
 	}
